@@ -42,9 +42,9 @@ Alarm::CallBack()
 }
 void Alarm::WaitUntil(int x) {
     IntStatus oldLevel = kernel->interrupt->SetLevel(IntOff);
-    Thread* time = kernel->currentThread;
+    Thread* t = kernel->currentThread;
     cout << "Alarm::WaitUntil go sleep" << endl;
-    _bedroom.PutToBed(time, x);
+    _bedroom.PutToBed(t, x);
     kernel->interrupt->SetLevel(oldLevel);
 }
 bool Bedroom::IsEmpty() {
