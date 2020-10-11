@@ -21,6 +21,8 @@
 #include "utility.h"
 #include "callback.h"
 #include "timer.h"
+#include <list>
+#include "thread.h"
 
 
 class Bedroom {
