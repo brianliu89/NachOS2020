@@ -1,14 +1,43 @@
-void Alarm::CallBack() {
+// alarm.cc
+//	Routines to use a hardware timer device to provide a
+//	software alarm clock.  For now, we just provide time-slicing.
+//
+//	Not completely implemented.
+//
+// Copyright (c) 1992-1996 The Regents of the University of California.
+// All rights reserved.  See copyright.h for copyright notice and limitation 
+// of liability and disclaimer of warranty provisions.
+
+#include "copyright.h"
+#include "alarm.h"
+#include "main.h"
+
+//----------------------------------------------------------------------
+// Alarm::Alarm
+//      Initialize a software alarm clock.  Start up a timer device
+//
+//      "doRandom" -- if true, arrange for the hardware interrupts to 
+//		occur at random, instead of fixed, intervals.
+//----------------------------------------------------------------------
+
+Alarm::Alarm(bool doRandom)
+{
+    timer = new Timer(doRandom, this);
+}
+
+
+void 
+Alarm::CallBack() 
+{
     Interrupt *interrupt = kernel->interrupt;
     MachineStatus status = interrupt->getStatus();
-    bool woken = _bedroom.MorningCall();
     
-    if (status == IdleMode && !woken && _bedroom.IsEmpty()) {// is it time to quit?
+    if (status == IdleMode) {
         if (!interrupt->AnyFutureInterrupts()) {
-        timer->Disable();	// turn off the timer
-    }
-    } else {			// there's someone to preempt
-    interrupt->YieldOnReturn();
+	    timer->Disable();
+	}
+    } else {
+	interrupt->YieldOnReturn();
     }
 }
 void Alarm::WaitUntil(int x) {
@@ -42,3 +71,4 @@ bool Bedroom::MorningCall() {
     }
     return woken;
 }
+
