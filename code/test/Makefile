@@ -68,11 +68,10 @@ test1: test1.o start.o
 	$(LD) $(LDFLAGS) start.o test1.o -o test1.coff
 	../bin/coff2noff test1.coff test1
 
-...
+
 all: halt shell matmult sort test1 test2 sleep
-...
+
 sleep: sleep.o start.o
     <span>$(LD)$</span><!-- Has MathJax -->(LDFLAGS) start.o sleep.o -o sleep.coff
     ../bin/coff2noff sleep.coff sleep
-...
 
