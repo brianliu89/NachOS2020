@@ -48,16 +48,15 @@ class Bedroom {
 class Alarm : public CallBackObj {
   public:
     Alarm(bool doRandomYield);	// Initialize the timer, and callback 
-				// to "toCall" every time slice.
+                // to "toCall" every time slice.
     ~Alarm() { delete timer; }
     
     void WaitUntil(int x);	// suspend execution until time > now + x
-
   private:
     Timer *timer;		// the hardware timer device
-
+    Bedroom _bedroom;
     void CallBack();		// called when the hardware
-				// timer generates an interrupt
+                // timer generates an interrupt
 };
 
 #endif // ALARM_H
